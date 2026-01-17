@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDEDITSHOP — Эдиты от 15₽</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            border: 2px solid #6c63ff;
+            box-shadow: 0 10px 30px rgba(108, 99, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 3rem;
+            color: #6c63ff;
+            margin-bottom: 10px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #6c63ff, #ff6b9d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #aaa;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .card {
+            background: rgba(20, 20, 40, 0.7);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(108, 99, 255, 0.3);
+            border-color: #6c63ff;
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .card-icon {
+            font-size: 2.5rem;
+            color: #6c63ff;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: white;
+        }
+        
+        .card-desc {
+            color: #bbb;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            min-height: 60px;
+        }
+        
+        .price {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #6c63ff;
+            margin: 15px 0;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: #aaa;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #6c63ff, #8257e6);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background: linear-gradient(90deg, #8257e6, #6c63ff);
+            box-shadow: 0 5px 15px rgba(108, 99, 255, 0.4);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 2px solid #6c63ff;
+            position: relative;
+            animation: modalAppear 0.5s ease;
+        }
+        
+        @keyframes modalAppear {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-icon {
+            font-size: 4rem;
+            color: #6c63ff;
+            margin-bottom: 20px;
+        }
+        
+        .modal h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .modal p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #ddd;
+            line-height: 1.5;
+        }
+        
+        .telegram-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #0088cc;
+            color: white;
+            padding: 18px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .telegram-btn:hover {
+            background: #0077b5;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 136, 204, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 2rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: white;
+        }
+        
+        .instructions {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            border-left: 5px solid #6c63ff;
+        }
+        
+        .instructions h3 {
+            color: #6c63ff;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(108, 99, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(108, 99, 255, 0.3);
+        }
+        
+        .contact-link {
+            color: #6c63ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+        
+        .contact-link:hover {
+            color: #ff6b9d;
+            text-decoration: underline;
+        }
+        
+        .admin-contact {
+            background: rgba(255, 107, 157, 0.1);
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-info {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .contact-item {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-magic"></i>
+            </div>
+            <h1>EDEDITSHOP</h1>
+            <p class="subtitle">Качественные эдиты для соцсетей по самой низкой цене! Выбирайте стиль, оформляйте заказ, получайте готовый результат в Telegram.</p>
+        </header>
+        
+        <div class="instructions">
+            <h3>Как купить эдит?</h3>
+            <ol>
+                <li>Выберите тип эдита из списка ниже</li>
+                <li>Нажмите кнопку "Купить за ...₽"</li>
+                <li>После оформления получите инструкцию</li>
+                <li>Свяжитесь с нами в Telegram: <strong>@EDEDITWORLDbot</strong> для получения эдита</li>
+                <li>Или напишите администратору напрямую</li>
+            </ol>
+        </div>
+        
+        <div class="grid">
+            <!-- Продукт 1 -->
+            <div class="card">
+                <div class="card-badge">ХИТ</div>
+                <div class="card-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3 class="card-title">Базовый эдит</h3>
+                <p class="card-desc">Простой, но стильный эдит для сторис или поста. Базовая цветокоррекция + текст.</p>
+                <div class="price">15<span>₽</span></div>
+                <button class="btn buy-btn" data-name="Базовый эдит" data-price="15">Купить за 15₽</button>
+            </div>
+            
+            <!-- Продукт 2 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-fire"></i>
+                </div>
+                <h3 class="card-title">Трендовый эдит</h3>
+                <p class="card-desc">Современный эдит с трендовыми эффектами и переходами. Для Reels/TikTok.</p>
+                <div class="price">20<span>₽</span></div>
+                <button class="btn buy-btn" data-name="Трендовый эдит" data-price="20">Купить за 20₽</button>
+            </div>
+            
+            <!-- Продукт 3 -->
+            <div class="card">
+                <div class="card-badge">ВЫГОДА</div>
+                <div class="card-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3 class="card-title">Премиум эдит</h3>
+                <p class="card-desc">Высококачественный эдит с анимацией, эффектами и индивидуальным подходом.</p>
+                <div class="price">25<span>₽</span></div>
+                <button class="btn buy-btn" data-name="Премиум эдит" data-price="25">Купить за 25₽</button>
+            </div>
+            
+            <!-- Продукт 4 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-video"></i>
+                </div>
+                <h3 class="card-title">Видео-эдит</h3>
+                <p class="card-desc">Обработка видео до 30 секунд: цвет, стабилизация, текстовые вставки.</p>
+                <div class="price">30<span>₽</span></div>
+                <button class="btn buy-btn" data-name="Видео-эдит" data-price="30">Купить за 30₽</button>
+            </div>
+            
+            <!-- Продукт 5 -->
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="card-title">Арт-эдит</h3>
+                <p class="card-desc">Художественная обработка в уникальном стиле. Рисованные эффекты и фильтры.</p>
+                <div class="price">25<span>₽</span></div>
+                <button class="btn buy-btn" data-name="Арт-эдит" data-price="25">Купить за 25₽</button>
+            </div>
+            
+            <!-- Продукт 6 -->
+            <div class="card">
+                <div class="card-badge">НОВИНКА</div>
+                <div class="card-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="card-title">Быстрый эдит</h3>
+                <p class="card-desc">Срочный заказ! Получите готовый эдит в течение 2 часов после оплаты.</p>
+                <div class="price">30<span>₽</span></div>
+                <button class="btn buy-btn" data-name="Быстрый эдит" data-price="30">Купить за 30₽</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>Что делать после покупки?</h3>
+            <p>Сразу после оформления заказа появится сообщение с инструкцией. Вам нужно будет:</p>
+            <ol>
+                <li>Перейти в Telegram по одной из ссылок ниже</li>
+                <li>Написать номер вашего заказа (он покажется на экране)</li>
+                <li>Отправить материалы для обработки (фото/видео)</li>
+                <li>Получить готовый эдит в течение указанного времени!</li>
+            </ol>
+        </div>
+    </div>
+    
+    <!-- Модальное окно после покупки -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="close-modal" id="closeModal">&times;</div>
+            <div class="modal-icon">
+                <i class="fas fa-paper-plane"></i>
+            </div>
+            <h2>Заказ оформлен!</h2>
+            <p>Ваш заказ "<span id="productName"></span>" успешно оформлен!</p>
+            <p><strong>Номер заказа: <span id="orderNumber"></span></strong></p>
+            <p>После оформления перейдите в Telegram бота:</p>
+            
+            <a href="https://t.me/EDEDITWORLDbot" target="_blank" class="telegram-btn">
+                <i class="fab fa-telegram"></i> @EDEDITWORLDbot
+            </a>
+            
+            <p style="margin-top: 25px; font-size: 1rem; color: #aaa;">
+                Если не хотите заморачиваться - свяжитесь с администрацией напрямую:
+            </p>
+            
+            <div class="admin-contact">
+                <p><strong>Связь с главным админом:</strong></p>
+                <a href="https://t.me/EDEDIT_ADMIN" target="_blank" class="telegram-btn" style="background: #ff6b9d; margin-top: 10px;">
+                    <i class="fas fa-crown"></i> Написать админу
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>EDEDITSHOP &copy; 2023 — Магазин эдитов для социальных сетей</p>
+        <p>После оформления перейдите в Telegram бота @EDEDITWORLDbot</p>
+        <p><strong>Если не хотите заморачиваться: свяжитесь с администрацией - связь с главным админом</strong></p>
+        
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fab fa-telegram"></i>
+                <a href="https://t.me/EDEDITWORLDbot" target="_blank" class="contact-link">@EDEDITWORLDbot</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-crown"></i>
+                <a href="https://t.me/EDEDIT_ADMIN" target="_blank" class="contact-link">@EDEDIT_ADMIN (Главный админ)</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-headset"></i>
+                <a href="https://t.me/EDEDIT_SUPPORT" target="_blank" class="contact-link">@EDEDIT_SUPPORT (Техподдержка)</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-clock"></i>
+                <span>Работаем 24/7</span>
+            </div>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 10px;">
+            <p><i class="fas fa-info-circle"></i> <strong>Важно:</strong> После покупки обязательно свяжитесь в Telegram для получения заказа!</p>
+        </div>
+    </footer>
+    
+    <script>
+        // Генерация случайного номера заказа
+        function generateOrderNumber() {
+            return 'EDIT-' + Math.floor(100000 + Math.random() * 900000);
+        }
+        
+        // Получение всех кнопок "Купить"
+        const buyButtons = document.querySelectorAll('.buy-btn');
+        const modal = document.getElementById('successModal');
+        const closeModal = document.getElementById('closeModal');
+        const productNameSpan = document.getElementById('productName');
+        const orderNumberSpan = document.getElementById('orderNumber');
+        
+        // Обработка клика по кнопке "Купить"
+        buyButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-name');
+                const productPrice = this.getAttribute('data-price');
+                
+                // Генерируем номер заказа
+                const orderNumber = generateOrderNumber();
+                
+                // Заполняем модальное окно
+                productNameSpan.textContent = productName;
+                orderNumberSpan.textContent = orderNumber;
+                
+                // Показываем модальное окно
+                modal.style.display = 'flex';
+                
+                // Сохраняем в localStorage
+                localStorage.setItem('lastOrder', JSON.stringify({
+                    name: productName,
+                    price: productPrice + '₽',
+                    number: orderNumber,
+                    date: new Date().toLocaleString()
+                }));
+                
+                // Можно добавить здесь отправку данных на сервер
+                // fetch('/api/order', { method: 'POST', body: JSON.stringify({...}) })
+            });
+        });
+        
+        // Закрытие модального окна
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Закрытие модального окна при клике вне его
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Показываем последний заказ при загрузке (если есть)
+        window.addEventListener('load', function() {
+            const lastOrder = localStorage.getItem('lastOrder');
+            if (lastOrder) {
+                const orderData = JSON.parse(lastOrder);
+                console.log('Ваш последний заказ:', orderData);
+            }
+        });
+        
+        // Добавляем анимацию для карточек
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
